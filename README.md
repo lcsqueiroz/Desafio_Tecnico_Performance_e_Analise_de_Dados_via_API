@@ -1,5 +1,16 @@
 # Desafio Técnico: Performance e Análise de Dados via API
 
+> 💡 Este projeto é a minha resolução para o desafio técnico criado pela [CodeCon](https://github.com/codecon-dev). O repositório original com as instruções pode ser encontrado [aqui](https://github.com/codecon-dev/desafio-1-1s-vs-3j).
+
+---
+
+## 📑 Sobre o Desafio Original
+
+Este projeto é uma solução de um desafio técnico educacional.
+
+- **Criador original:** [CodeCon](https://github.com/codecon-dev)
+- **Repositório original:** [desafio-1-1s-vs-3j](https://github.com/codecon-dev/desafio-1-1s-vs-3j)
+
 ## Objetivo
 
 Criar uma API que recebe um arquivo JSON com 100.000 usuários e oferece endpoints performáticos e bem estruturados para análise dos dados.
