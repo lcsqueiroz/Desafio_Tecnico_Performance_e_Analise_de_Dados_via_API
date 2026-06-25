@@ -4,7 +4,7 @@
   "description": "> 💡 Este projeto é a minha resolução para o desafio técnico criado pela [CodeCon](https://github.com/codecon-dev). O repositório original com as instruções pode ser encontrado [aqui](https://github.com/codecon-dev/desafio-1-1s-vs-3j).",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node --watch index.js"
   },
   "repository": {
     "type": "git",
