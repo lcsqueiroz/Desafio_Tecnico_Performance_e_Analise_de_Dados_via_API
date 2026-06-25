@@ -1,0 +1,24 @@
+{
+  "name": "desafio_tecnico_performance_e_analise_de_dados_via_api",
+  "version": "1.0.0",
+  "description": "> 💡 Este projeto é a minha resolução para o desafio técnico criado pela [CodeCon](https://github.com/codecon-dev). O repositório original com as instruções pode ser encontrado [aqui](https://github.com/codecon-dev/desafio-1-1s-vs-3j).",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lcsqueiroz/Desafio_Tecnico_Performance_e_Analise_de_Dados_via_API.git"
+  },
+  "keywords": [],
+  "author": "Lucas Queiroz Vieira",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/lcsqueiroz/Desafio_Tecnico_Performance_e_Analise_de_Dados_via_API/issues"
+  },
+  "homepage": "https://github.com/lcsqueiroz/Desafio_Tecnico_Performance_e_Analise_de_Dados_via_API#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
