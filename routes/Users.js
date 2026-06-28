@@ -10,7 +10,7 @@ router.get('/users', (req, res) => {
 
 router.post('/users', (req, res) => {
   fs.readFile('usuarios_1000.json', 'utf-8', (err, snapshot) => {
-    if (err) res.status(400).json({ message: 'Sem Informações' });
+    if (err) return res.status(400).json({ message: 'Sem Informações' });
     const userData = JSON.parse(snapshot);
     users.push(...userData);
     return res.status(200).json({ message: 'Usuários enviados com sucesso' });
