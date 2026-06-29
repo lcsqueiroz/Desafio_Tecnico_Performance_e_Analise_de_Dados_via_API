@@ -18,6 +18,7 @@ router.post('/users', (req, res) => {
 });
 
 router.get('/superusers', (req, res) => {
+  const inicio = performance.now();
   const superUsers = users
     .filter((users) => {
       return users.score >= 900 && users.active;
@@ -29,6 +30,8 @@ router.get('/superusers', (req, res) => {
       score: users.score,
       país: users.country,
     }));
-  return res.status(200).json(superUsers);
+  return res
+    .status(200)
+    .json({ superUsers: superUsers, tempo: performance.now() - inicio });
 });
 export default router;
