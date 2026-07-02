@@ -33,4 +33,28 @@ router.get('/superusers', (req, res) => {
     timestamp: getTimestamp(),
   });
 });
+
+router.get('/top-countries', (req, res) => {
+  try {
+    const inicio = performance.now();
+
+    const agrupadoPorPais = Object.groupBy(
+      getSuperUsers(users),
+      (user) => user.country,
+    );
+
+    const topPaises = Object.entries(agrupadoPorPais)
+      .map(([país, superUsers]) => ({ país, total: superUsers.length }))
+      .sort((a, b) => b.total - a.total)
+      .slice(0, 5);
+
+    return res.status(200).json({
+      topPaises,
+      tempo: performance.now() - inicio,
+      timestamp: getTimestamp(),
+    });
+  } catch (error) {
+    return res.status(500).json({ erro: error.message });
+  }
+});
 export default router;
