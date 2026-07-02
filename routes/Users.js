@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import fs from 'fs';
+import { getSuperUsers, getTimestamp } from '../utils/users.js';
 
 const router = Router();
 const users = [];
@@ -19,19 +20,17 @@ router.post('/users', (req, res) => {
 
 router.get('/superusers', (req, res) => {
   const inicio = performance.now();
-  const superUsers = users
-    .filter((users) => {
-      return users.score >= 900 && users.active;
-    })
-    .map((users) => ({
-      id: users.id,
-      name: users.name,
-      idade: users.age,
-      score: users.score,
-      país: users.country,
-    }));
-  return res
-    .status(200)
-    .json({ superUsers: superUsers, tempo: performance.now() - inicio });
+  const superUsers = getSuperUsers(users).map((user) => ({
+    id: user.id,
+    name: user.name,
+    idade: user.age,
+    score: user.score,
+    país: user.country,
+  }));
+  return res.status(200).json({
+    superUsers,
+    tempo: performance.now() - inicio,
+    timestamp: getTimestamp(),
+  });
 });
 export default router;
