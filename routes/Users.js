@@ -63,4 +63,39 @@ router.get('/top-countries', (req, res) => {
     return res.status(500).json({ erro: error.message });
   }
 });
+
+router.get('/team-insights', (req, res) => {
+  const inicio = performance.now();
+
+  const team = Object.groupBy(users, (user) => user.team.name);
+
+  const teamInsights = Object.entries(team).map(([nome, membros]) => {
+    const totalMembros = membros.length;
+    const lideres = membros.filter((membro) => membro.team.leader).length;
+
+    const projetosConcluidos = membros.reduce((totalProjetos, membro) => {
+      const concluidosDoMembro = membro.team.projects.filter(
+        (projeto) => projeto.completed,
+      ).length;
+      return totalProjetos + concluidosDoMembro;
+    }, 0);
+
+    const ativos = membros.filter((membro) => membro.active).length;
+    const percentualAtivos = ((ativos / totalMembros) * 100).toFixed(2);
+
+    return {
+      time: nome,
+      totalMembros,
+      lideres,
+      projetosConcluidos,
+      percentualAtivos,
+    };
+  });
+
+  return res.status(200).json({
+    teamInsights,
+    tempo: performance.now() - inicio,
+    timestamp: getTimestamp(),
+  });
+});
 export default router;
