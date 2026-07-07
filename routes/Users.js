@@ -7,6 +7,7 @@ import {
   getTeamInsights,
   getActiveUsersPerDay,
 } from '../services/usersService.js';
+import { avaliarEndpoints } from '../services/evaluationService.js';
 import { medirTempoDeExecucao } from '../utils/time.js';
 
 const router = Router();
@@ -30,8 +31,8 @@ router.post('/users', async (req, res) => {
   }
 });
 
-router.get('/superusers', (req, res) => {
-  const { resultado, tempo, timestamp } = medirTempoDeExecucao(() =>
+router.get('/superusers', async (req, res) => {
+  const { resultado, tempo, timestamp } = await medirTempoDeExecucao(() =>
     getSuperUsers(getAllUsers()).map((user) => ({
       id: user.id,
       name: user.name,
@@ -44,9 +45,9 @@ router.get('/superusers', (req, res) => {
   return res.status(200).json({ superUsers: resultado, tempo, timestamp });
 });
 
-router.get('/top-countries', (req, res) => {
+router.get('/top-countries', async (req, res) => {
   try {
-    const { resultado, tempo, timestamp } = medirTempoDeExecucao(() =>
+    const { resultado, tempo, timestamp } = await medirTempoDeExecucao(() =>
       getTopCountries(getAllUsers()),
     );
 
@@ -56,22 +57,34 @@ router.get('/top-countries', (req, res) => {
   }
 });
 
-router.get('/team-insights', (req, res) => {
-  const { resultado, tempo, timestamp } = medirTempoDeExecucao(() =>
+router.get('/team-insights', async (req, res) => {
+  const { resultado, tempo, timestamp } = await medirTempoDeExecucao(() =>
     getTeamInsights(getAllUsers()),
   );
 
   return res.status(200).json({ teamInsights: resultado, tempo, timestamp });
 });
 
-router.get('/active-users-per-day', (req, res) => {
+router.get('/active-users-per-day', async (req, res) => {
   const { min } = req.query;
 
-  const { resultado, tempo, timestamp } = medirTempoDeExecucao(() =>
+  const { resultado, tempo, timestamp } = await medirTempoDeExecucao(() =>
     getActiveUsersPerDay(getAllUsers(), min),
   );
 
   return res.status(200).json({ loginsPorDia: resultado, tempo, timestamp });
+});
+
+router.get('/evaluation', async (req, res) => {
+  const baseUrl = `${req.protocol}://${req.get('host')}`;
+
+  const { resultado, tempo, timestamp } = await medirTempoDeExecucao(() =>
+    avaliarEndpoints(baseUrl),
+  );
+
+  return res
+    .status(200)
+    .json({ endpointsTestados: resultado, tempo, timestamp });
 });
 
 export default router;
