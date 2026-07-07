@@ -14,6 +14,33 @@ export function getTopCountries(users) {
     .slice(0, 5);
 }
 
+export function getActiveUsersPerDay(users, min) {
+  const datasDosLogins = [];
+
+  users.forEach((user) => {
+    user.logs.forEach((log) => {
+      if (log.action === 'login') {
+        datasDosLogins.push(log.date);
+      }
+    });
+  });
+
+  const agrupadoPorData = Object.groupBy(datasDosLogins, (data) => data);
+
+  let loginsPorDia = Object.entries(agrupadoPorData)
+    .map(([data, logins]) => ({
+      data,
+      total: logins.length,
+    }))
+    .sort((a, b) => a.data.localeCompare(b.data));
+
+  if (min) {
+    loginsPorDia = loginsPorDia.filter((dia) => dia.total >= Number(min));
+  }
+
+  return loginsPorDia;
+}
+
 export function getTeamInsights(users) {
   const team = Object.groupBy(users, (user) => user.team.name);
 

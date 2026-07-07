@@ -5,6 +5,7 @@ import {
   getSuperUsers,
   getTopCountries,
   getTeamInsights,
+  getActiveUsersPerDay,
 } from '../services/usersService.js';
 import { medirTempoDeExecucao } from '../utils/time.js';
 
@@ -61,6 +62,16 @@ router.get('/team-insights', (req, res) => {
   );
 
   return res.status(200).json({ teamInsights: resultado, tempo, timestamp });
+});
+
+router.get('/active-users-per-day', (req, res) => {
+  const { min } = req.query;
+
+  const { resultado, tempo, timestamp } = medirTempoDeExecucao(() =>
+    getActiveUsersPerDay(getAllUsers(), min),
+  );
+
+  return res.status(200).json({ loginsPorDia: resultado, tempo, timestamp });
 });
 
 export default router;
