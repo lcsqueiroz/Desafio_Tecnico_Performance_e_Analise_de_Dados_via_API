@@ -6,7 +6,7 @@ import {
   getTopCountries,
   getTeamInsights,
 } from '../services/usersService.js';
-import { withTiming } from '../utils/time.js';
+import { medirTempoDeExecucao } from '../utils/time.js';
 
 const router = Router();
 
@@ -30,7 +30,7 @@ router.post('/users', async (req, res) => {
 });
 
 router.get('/superusers', (req, res) => {
-  const { resultado, tempo, timestamp } = withTiming(() =>
+  const { resultado, tempo, timestamp } = medirTempoDeExecucao(() =>
     getSuperUsers(getAllUsers()).map((user) => ({
       id: user.id,
       name: user.name,
@@ -45,7 +45,7 @@ router.get('/superusers', (req, res) => {
 
 router.get('/top-countries', (req, res) => {
   try {
-    const { resultado, tempo, timestamp } = withTiming(() =>
+    const { resultado, tempo, timestamp } = medirTempoDeExecucao(() =>
       getTopCountries(getAllUsers()),
     );
 
@@ -56,7 +56,7 @@ router.get('/top-countries', (req, res) => {
 });
 
 router.get('/team-insights', (req, res) => {
-  const { resultado, tempo, timestamp } = withTiming(() =>
+  const { resultado, tempo, timestamp } = medirTempoDeExecucao(() =>
     getTeamInsights(getAllUsers()),
   );
 
