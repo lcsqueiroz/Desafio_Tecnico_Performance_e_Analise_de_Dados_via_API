@@ -2,13 +2,15 @@ export function getTimestamp() {
   return new Date().toISOString();
 }
 
-export function withTiming(fn) {
+export function medirTempoDeExecucao(funcao) {
   const inicio = performance.now();
-  const resultado = fn();
+  const resultado = funcao();
+  const fim = performance.now();
+  const tempo = fim - inicio;
 
   return {
     resultado,
-    tempo: performance.now() - inicio,
+    tempo,
     timestamp: getTimestamp(),
   };
 }
