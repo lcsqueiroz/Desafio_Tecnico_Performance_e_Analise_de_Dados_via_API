@@ -2,9 +2,9 @@ export function getTimestamp() {
   return new Date().toISOString();
 }
 
-export function medirTempoDeExecucao(funcao) {
+export async function medirTempoDeExecucao(funcao) {
   const inicio = performance.now();
-  const resultado = funcao();
+  const resultado = await funcao();
   const fim = performance.now();
   const tempo = fim - inicio;
 
